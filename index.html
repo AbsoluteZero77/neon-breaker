@@ -71,25 +71,403 @@ const sfx = {
 // 1-6 coloured bricks, T grey (2 hits), H gold (3 hits), X explosive, S steel (unbreakable)
 const LEVELS = [
   { name: 'Warm up', rows: [
-    '............', '111111111111', '222222222222', '333333333333', '444444444444'] },
+    '............',
+    '111111111111',
+    '222222222222',
+    '333333333333',
+    '444444444444'] },
   { name: 'Pyramid', rows: [
-    '.....11.....', '....2222....', '...333333...', '..44444444..', '.5555555555.', '666666666666'] },
+    '.....11.....',
+    '....2222....',
+    '...333333...',
+    '..44444444..',
+    '.5555555555.',
+    '666666666666'] },
   { name: 'Checkers', rows: [
-    '1.2.3.4.5.6.', '.6.5.4.3.2.1', '1.2.3.4.5.6.', '.6.5.4.3.2.1', '1.2.3.4.5.6.'] },
+    '1.2.3.4.5.6.',
+    '.6.5.4.3.2.1',
+    '1.2.3.4.5.6.',
+    '.6.5.4.3.2.1',
+    '1.2.3.4.5.6.'] },
   { name: 'Steel gates', rows: [
-    'SS........SS', '111111111111', '22SS22SS2222', '333333333333', 'S4444444444S'] },
+    'SS........SS',
+    '111111111111',
+    '22SS22SS2222',
+    '333333333333',
+    'S4444444444S'] },
   { name: 'Tough guys', rows: [
-    'TTTTTTTTTTTT', '111111111111', 'TT22TT22TT22', '333333333333', 'HHHHHHHHHHHH'] },
+    'TTTTTTTTTTTT',
+    '111111111111',
+    'TT22TT22TT22',
+    '333333333333',
+    'HHHHHHHHHHHH'] },
   { name: 'Boom town', rows: [
-    '1X1X1X1X1X1X', '222222222222', 'X3X3X3X3X3X3', '444444444444', '5X5X5X5X5X5X'] },
+    '1X1X1X1X1X1X',
+    '222222222222',
+    'X3X3X3X3X3X3',
+    '444444444444',
+    '5X5X5X5X5X5X'] },
   { name: 'Diamond', rows: [
-    '.....11.....', '....2222....', '...333333...', '..44TTTT44..', '...555555...', '....6666....', '.....XX.....'] },
+    '.....11.....',
+    '....2222....',
+    '...333333...',
+    '..44TTTT44..',
+    '...555555...',
+    '....6666....',
+    '.....XX.....'] },
   { name: 'Fortress', rows: [
-    'SSSSSSSSSSSS', 'S1111111111S', 'S2TTTTTTTT2S', 'S3333333333S', 'S4XXXXXXXX4S', 'S..........S'] },
+    'SSSSSSSSSSSS',
+    'S1111111111S',
+    'S2TTTTTTTT2S',
+    'S3333333333S',
+    'S4XXXXXXXX4S',
+    'S..........S'] },
   { name: 'Invaders', rows: [
-    '..4......4..', '...4....4...', '..44444444..', '.44.4444.44.', '444444444444', '4.44444444.4', '4.4......4.4', '...44..44...'] },
-  { name: 'Final wall', rows: [
-    'SHHHHHHHHHHS', 'HX2XXXXXX2XH', 'T3T3T3T3T3T3', 'S4444444444S', 'T5T5T5T5T5T5', '666666666666'] }
+    '..4......4..',
+    '...4....4...',
+    '..44444444..',
+    '.44.4444.44.',
+    '444444444444',
+    '4.44444444.4',
+    '4.4......4.4',
+    '...44..44...'] },
+  { name: 'Wall boss', rows: [
+    'SHHHHHHHHHHS',
+    'HX2XXXXXX2XH',
+    'T3T3T3T3T3T3',
+    'S4444444444S',
+    'T5T5T5T5T5T5',
+    '666666666666'] },
+  { name: 'Stripes', rows: [
+    '111111111111',
+    '............',
+    '222222222222',
+    '............',
+    '333333333333',
+    '............',
+    '444444444444'] },
+  { name: 'Pillars', rows: [
+    '11.22.33.44.',
+    '11.22.33.44.',
+    '11.22.33.44.',
+    '11.22.33.44.',
+    '11.22.33.44.',
+    '11.22.33.44.'] },
+  { name: 'Zigzag', rows: [
+    '11..........',
+    '.22.........',
+    '..33........',
+    '...44.......',
+    '....55......',
+    '.....66.....',
+    '......11....',
+    '.......22...',
+    '........33..',
+    '.........44.',
+    '..........55'] },
+  { name: 'Hourglass', rows: [
+    '111111111111',
+    '.2222222222.',
+    '..33333333..',
+    '...444444...',
+    '....5555....',
+    '....5555....',
+    '...444444...',
+    '..33333333..',
+    '.2222222222.'] },
+  { name: 'Big heart', rows: [
+    '..11....11..',
+    '.1111..1111.',
+    '111111111111',
+    '11111HH11111',
+    '.1111111111.',
+    '..11111111..',
+    '...111111...',
+    '....1111....',
+    '.....11.....'] },
+  { name: 'Stairs', rows: [
+    '1...........',
+    '22..........',
+    '333.........',
+    '4444........',
+    '55555.......',
+    '666666......',
+    'TTTTTTTTTTTT'] },
+  { name: 'Rainbow', rows: [
+    '...111111...',
+    '..22222222..',
+    '.3333333333.',
+    '444444444444',
+    '55555..55555',
+    '66666..66666'] },
+  { name: 'Frame', rows: [
+    'TTTTTTTTTTTT',
+    'T..........T',
+    'T.11111111.T',
+    'T.12222221.T',
+    'T.12333321.T',
+    'T.12222221.T',
+    'T.11111111.T',
+    'T..........T',
+    'TTTTTTTTTTTT'] },
+  { name: 'Mines', rows: [
+    'X.X.X.X.X.X.',
+    '.1.2.3.4.5.6',
+    'X.X.X.X.X.X.',
+    '.6.5.4.3.2.1',
+    'X.X.X.X.X.X.'] },
+  { name: 'Storm eye', rows: [
+    '.....SS.....',
+    '...TTTTTT...',
+    '..TTHHHHTT..',
+    '.TTH1111HTT.',
+    '.TH11XX11HT.',
+    '.TTH1111HTT.',
+    '..TTHHHHTT..',
+    '...TTTTTT...'] },
+  { name: 'Serpent', rows: [
+    '111111111.SS',
+    'SS.222222222',
+    '333333333.SS',
+    'SS.444444444',
+    '555555555.SS',
+    'SS.666666666'] },
+  { name: 'Candy stripe', rows: [
+    '121212121212',
+    '343434343434',
+    '565656565656',
+    '121212121212',
+    '343434343434'] },
+  { name: 'Powder keg', rows: [
+    'XXXXXXXXXXXX',
+    '111111111111',
+    '222222222222',
+    'XXXXXXXXXXXX'] },
+  { name: 'Grid', rows: [
+    '.1.1.1.1.1.1',
+    '2.2.2.2.2.2.',
+    '.3.3.3.3.3.3',
+    '4.4.4.4.4.4.',
+    '.5.5.5.5.5.5',
+    '6.6.6.6.6.6.'] },
+  { name: 'Castle', rows: [
+    'S.S..SS..S.S',
+    'TTTTTTTTTTTT',
+    'T1T2T3T4T5T6',
+    'TTTTTTTTTTTT',
+    'XHXHXHXHXHXH'] },
+  { name: 'Arrow', rows: [
+    '.....33.....',
+    '....3333....',
+    '...333333...',
+    '..33333333..',
+    '.....55.....',
+    '.....55.....',
+    '.....55.....',
+    '.....55.....'] },
+  { name: 'Chain blast', rows: [
+    'X1X1X1X1X1X1',
+    '1X1X1X1X1X1X',
+    'X2X2X2X2X2X2',
+    '2X2X2X2X2X2X'] },
+  { name: 'Waves', rows: [
+    '11........11',
+    '..22....22..',
+    '....3333....',
+    '..44....44..',
+    '55........55',
+    '..66....66..',
+    '....1111....',
+    '..22....22..',
+    '33........33'] },
+  { name: 'Tough crowd', rows: [
+    'HTHTHTHTHTHT',
+    'THTHTHTHTHTH',
+    '111111111111',
+    '222222222222'] },
+  { name: 'Core boss', rows: [
+    'SS........SS',
+    'S.TTTTTTTT.S',
+    'S.THHHHHHT.S',
+    'S.THXXXXHT.S',
+    'S.THHHHHHT.S',
+    'S.TTTTTTTT.S',
+    'SS........SS'] },
+  { name: 'Ladder', rows: [
+    'S1111111111S',
+    'S..........S',
+    'S2222222222S',
+    'S..........S',
+    'S3333333333S',
+    'S..........S',
+    'S4444444444S'] },
+  { name: 'Bumpers', rows: [
+    '..2..33..2..',
+    '.222.33.222.',
+    '..2..33..2..',
+    'X..........X',
+    '..4..55..4..',
+    '.444.55.444.',
+    '..4..55..4..'] },
+  { name: 'Cross', rows: [
+    '.....HH.....',
+    '.....HH.....',
+    '.....HH.....',
+    '333333333333',
+    '333333333333',
+    '.....HH.....',
+    '.....HH.....',
+    '.....HH.....'] },
+  { name: 'Honeycomb', rows: [
+    '.22.22.22.22',
+    '22.22.22.22.',
+    '.33.33.33.33',
+    '33.33.33.33.',
+    '.44.44.44.44',
+    '44.44.44.44.'] },
+  { name: 'Skyline', rows: [
+    '...X.....X..',
+    '...4.6...4..',
+    '.2.4.6.2.4..',
+    '.2.456.2.45.',
+    '12.456.2345.',
+    '123456123456',
+    '123456123456'] },
+  { name: 'Smiley', rows: [
+    '...222222...',
+    '..22222222..',
+    '.2222222222.',
+    '.22..22..22.',
+    '.2222222222.',
+    '.22.2222.22.',
+    '.222....222.',
+    '..22222222..',
+    '...222222...'] },
+  { name: 'Rocket', rows: [
+    '.....33.....',
+    '....3333....',
+    '....3113....',
+    '....3113....',
+    '....3333....',
+    '...333333...',
+    '..33333333..',
+    '.55.3333.55.',
+    '.55......55.'] },
+  { name: 'Crab', rows: [
+    '...6....6...',
+    '....6..6....',
+    '...666666...',
+    '..66.66.66..',
+    '.6666666666.',
+    '.6.666666.6.',
+    '.6.6....6.6.',
+    '....66.66...'] },
+  { name: 'Tree', rows: [
+    '.....44.....',
+    '....4444....',
+    '...444444...',
+    '..44444444..',
+    '...444444...',
+    '..44444444..',
+    '.4444444444.',
+    '.....22.....',
+    '.....22.....'] },
+  { name: 'Bunker', rows: [
+    'SS.SS..SS.SS',
+    'STHHHHHHHHTS',
+    'SHXXXXXXXXHS',
+    'STHHHHHHHHTS',
+    'S.TTTTTTTT.S'] },
+  { name: 'House', rows: [
+    '.....11.....',
+    '....1111....',
+    '...111111...',
+    '..11111111..',
+    '.1111111111.',
+    '333333333333',
+    '33T33HH33T33',
+    '33T33HH33T33',
+    '333333TT3333'] },
+  { name: 'Rings', rows: [
+    'TTTTTTTTTTTT',
+    'T1111111111T',
+    'T1222222221T',
+    'T12XXXXXX21T',
+    'T12XXXXXX21T',
+    'T1222222221T',
+    'T1111111111T',
+    'TTTTTTTTTTTT'] },
+  { name: 'Diagonals', rows: [
+    'T23456123T56',
+    '2345T1234561',
+    '34561234T612',
+    '456T23456123',
+    '5612345T1234',
+    '61T34561234T',
+    '123456T23456'] },
+  { name: 'Bullseye', rows: [
+    '...433334...',
+    '...422224...',
+    '..43211234..',
+    '..431HH134..',
+    '..431XX134..',
+    '..431HH134..',
+    '..43211234..',
+    '...422224...',
+    '...433334...'] },
+  { name: 'Orb', rows: [
+    '....TTTT....',
+    '....4444....',
+    '...T4334T...',
+    '...T3XX3T...',
+    '...53XX35...',
+    '...T3XX3T...',
+    '...T4334T...',
+    '....4444....',
+    '....TTTT....'] },
+  { name: 'Confetti', rows: [
+    '215.4224.512',
+    '.4.3....3.4.',
+    '36.15XX51.63',
+    '43X.T22T.X34',
+    '1.26144162.1',
+    '524..11..425',
+    '532432234235',
+    '65144TT44156'] },
+  { name: 'Sprinkles', rows: [
+    '1HHT3XX3THH1',
+    'XTT3.55.3TTX',
+    'T.X33..33X.T',
+    'SHXH.55.HXHS',
+    'T1S51XX15S1T',
+    '1STT5TT5TTS1',
+    '1.X3X33X3X.1',
+    '1XXXTHHTXXX1'] },
+  { name: 'Ocean', rows: [
+    '.....6......',
+    '.....61.....',
+    '....5.1....6',
+    '1...5..2...6',
+    '1..4...2..5.',
+    '.2.4....3.5.',
+    '.23.....34..'] },
+  { name: 'Gauntlet', rows: [
+    '222222222222',
+    'S..S..S..S..',
+    '333333333333',
+    '.S..S..S..S.',
+    '444444444444',
+    'S..S..S..S..',
+    '555555555555'] },
+  { name: 'Neon core', rows: [
+    'SSSSSSSSSSSS',
+    'HHHHHHHHHHHH',
+    'H66XXXXXX66H',
+    'H6HHHHHHHH6H',
+    'H6HXXXXXXH6H',
+    'H6HHHHHHHH6H',
+    'H66XXXXXX66H',
+    'HHHHHHHHHHHH'] }
 ];
 const COLS = 12, BW = 38, BH = 22, GAP = 4, OX = (W - (COLS * BW + (COLS - 1) * GAP)) / 2, OY = 118;
 const PAL = ['#ff3b6b', '#ff9f1c', '#ffe14d', '#37d67a', '#2fb8ff', '#b57bff'];
@@ -116,6 +494,7 @@ const FX_BARS = [
 /* ---------- state ---------- */
 let state = 'menu';
 let level = 1, score = 0, lives = 3, combo = 1, levelStartScore = 0, clearBonus = 0, remaining = 0;
+let bonusLife = false, levelPage = 0;
 let bricks = [], balls = [], drops = [], shots = [], parts = [], floaters = [], rings = [];
 const paddle = { x: W / 2 - 60, w: 120, h: 18, y: H - PAD_BOTTOM };
 let targetX = paddle.x;
@@ -208,7 +587,7 @@ function startGame(n) { score = 0; lives = 3; startLevel(n); }
 function launchAll() {
   for (const b of balls) if (b.stuck) { b.stuck = false; b.vx = rand(-.35, .35); b.vy = -1; }
 }
-function baseSpeed() { return (4.8 + level * 0.18) * (fx.slow > 0 ? 0.7 : 1); }
+function baseSpeed() { return Math.min(8.4, 4.6 + level * 0.1) * (fx.slow > 0 ? 0.7 : 1); }
 function pause() { if (state === 'play') { state = 'paused'; drag = null; } }
 
 function loseLife() {
@@ -222,6 +601,8 @@ function loseLife() {
 }
 function levelClear() {
   clearBonus = 300 + lives * 100; score += clearBonus;
+  bonusLife = false;
+  if (level % 10 === 0 && level < LEVELS.length && lives < 5) { lives++; bonusLife = true; }
   if (score > hi) { hi = score; store.set('nb_hi', hi); }
   for (let i = 0; i < 12; i++) burst(rand(60, 480), rand(100, 360), PAL[i % 6], 10);
   sfx.win(); buzz([40, 40, 40]);
@@ -310,7 +691,7 @@ function updateBall(b, dt) {
     if (b.vy > 0 && b.y + b.r >= paddle.y && b.y - b.r <= paddle.y + paddle.h &&
         b.x >= paddle.x - b.r && b.x <= paddle.x + paddle.w + b.r) {
       const rel = clamp((b.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2), -1, 1);
-      const ang = rel * 1.05;
+      const ang = clamp(rel * 1.05 + rand(-.05, .05), -1.2, 1.2); // tiny jitter stops endless loops
       b.vx = sp * Math.sin(ang); b.vy = -sp * Math.cos(ang);
       b.y = paddle.y - b.r - 0.1; combo = 1; sfx.paddle();
     }
@@ -534,7 +915,9 @@ function drawMenu() {
   });
   const bw = 360, bh = 62, bx = (W - bw) / 2, by = Math.max(300, Math.round(H * 0.36)), st = 78;
   button('Play', bx, by, bw, bh, () => startGame(1), true, '#37d67a');
-  button('Levels', bx, by + st, bw, bh, () => { state = 'levels'; });
+  button('Levels', bx, by + st, bw, bh, () => {
+    levelPage = Math.min(Math.ceil(LEVELS.length / 10) - 1, Math.floor((Math.min(unlocked, LEVELS.length) - 1) / 10));
+    state = 'levels'; });
   button('How to play', bx, by + st * 2, bw, bh, () => { state = 'help'; });
   button('Touch speed: ' + SENS_NAME[sensIdx], bx, by + st * 3, bw, bh, () => {
     sensIdx = (sensIdx + 1) % 3; store.set('nb_sens', sensIdx); }, false, '#ff9f1c');
@@ -544,22 +927,29 @@ function drawMenu() {
 }
 function drawLevels() {
   drawBG();
-  text('Choose a level', W / 2, 60, 38, '#fff');
-  for (let i = 0; i < LEVELS.length; i++) {
-    const col = i % 2, row = (i / 2) | 0, x = 25 + col * 255, y = 110 + row * 108, ok = i + 1 <= unlocked;
+  const pages = Math.ceil(LEVELS.length / 10);
+  text('Choose a level', W / 2, 46, 36, '#fff');
+  text('Levels ' + (levelPage * 10 + 1) + '\u2013' + Math.min(LEVELS.length, levelPage * 10 + 10) +
+       '   \u00b7   ' + Math.min(unlocked, LEVELS.length) + ' of ' + LEVELS.length + ' unlocked', W / 2, 86, 16, '#cfc6f5', 'center', '700');
+  for (let j = 0; j < 10; j++) {
+    const i = levelPage * 10 + j;
+    if (i >= LEVELS.length) break;
+    const col = j % 2, row = (j / 2) | 0, x = 25 + col * 255, y = 110 + row * 108, ok = i + 1 <= unlocked;
     const c = PAL[i % 6];
     ctx.fillStyle = ok ? 'rgba(255,255,255,.08)' : 'rgba(255,255,255,.03)'; rr(x, y, 235, 96, 14); ctx.fill();
     ctx.strokeStyle = ok ? c : 'rgba(255,255,255,.15)'; ctx.lineWidth = 3; rr(x, y, 235, 96, 14); ctx.stroke();
     if (ok) {
       hit(x, y, 235, 96, () => startGame(i + 1));
-      text(String(i + 1), x + 44, y + 48, 44, c, 'center', '900');
-      text(LEVELS[i].name, x + 82, y + 48, 18, '#fff', 'left', '700');
+      text(String(i + 1), x + 42, y + 48, 42, c, 'center', '900');
+      text(LEVELS[i].name, x + 82, y + 48, 17, '#fff', 'left', '700');
     } else {
-      text(String(i + 1), x + 44, y + 48, 44, 'rgba(255,255,255,.2)', 'center', '900');
-      text('Locked', x + 82, y + 48, 18, 'rgba(255,255,255,.35)', 'left', '700');
+      text(String(i + 1), x + 42, y + 48, 42, 'rgba(255,255,255,.2)', 'center', '900');
+      text('Locked', x + 82, y + 48, 17, 'rgba(255,255,255,.35)', 'left', '700');
     }
   }
-  button('Back', W / 2 - 120, H - 110, 240, 58, () => { state = 'menu'; });
+  button('\u2039 Prev', 25, H - 110, 150, 58, () => { levelPage = (levelPage + pages - 1) % pages; }, false, '#ff9f1c');
+  button('Back', 195, H - 110, 150, 58, () => { state = 'menu'; });
+  button('Next \u203a', 365, H - 110, 150, 58, () => { levelPage = (levelPage + 1) % pages; }, false, '#ff9f1c');
 }
 function drawHelp() {
   drawBG();
@@ -600,7 +990,7 @@ function render() {
       ['Resume', () => { state = 'play'; }],
       ['Restart level', () => { score = levelStartScore; startLevel(level); }],
       ['Main menu', () => { state = 'menu'; }]]);
-    else if (state === 'clear') overlay('Level clear!', ['Bonus +' + clearBonus, 'Score ' + score], [
+    else if (state === 'clear') overlay('Level clear!', ['Bonus +' + clearBonus, 'Score ' + score].concat(bonusLife ? ['Extra life!'] : []), [
       ['Next level', () => startLevel(level + 1)],
       ['Main menu', () => { state = 'menu'; }]]);
     else if (state === 'gameover') overlay('Game over', ['Score ' + score, 'Best ' + hi], [
